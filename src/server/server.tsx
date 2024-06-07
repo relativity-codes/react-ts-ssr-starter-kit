@@ -7,11 +7,11 @@ import App from '@/client/components/App';
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.resolve(__dirname, 'dist')));
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.get('*', (req, res) => {
-    const appHtml = renderToString(<App />);
-    const html = `
+  const appHtml = renderToString(<App />);
+  const html = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -21,13 +21,17 @@ app.get('*', (req, res) => {
     </head>
     <body>
       <div id="root">${appHtml}</div>
-      <script src="client.js"></script>
+      <script src="/client.js"></script>
     </body>
     </html>
   `;
-    res.send(html);
+  res.send(html);
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
+
+if ((module as any).hot) {
+  (module as any).hot.accept();
+}

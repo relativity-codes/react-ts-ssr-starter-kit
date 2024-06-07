@@ -38,4 +38,17 @@ module.exports = {
       template: './src/client/index.html',
     }),
   ],
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    hot: true,
+    historyApiFallback: true,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3000',
+      }
+    ],
+  },
 };
